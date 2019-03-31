@@ -1,6 +1,7 @@
 ﻿using GeneticAlgorithm.Crossbreeding;
 using GeneticAlgorithm.FuncImpls.Base;
 using GeneticAlgorithm.General.Chromosome;
+using GeneticAlgorithm.General.Generators;
 using GeneticAlgorithm.General.Range;
 using GeneticAlgorithm.Mutation;
 using GeneticAlgorithm.Selection;
@@ -25,6 +26,7 @@ namespace GeneticAlgorithm.General
         private FloatRange range;
         private Random random;
         private int bitCountForIntCoding;
+        private GeneratePopulationInt generatePopulationInt;
 
         public GeneticAlgorithm(
                 int populationSize, int paramsCount, double generationGapPart,
@@ -34,7 +36,7 @@ namespace GeneticAlgorithm.General
                 IFitnessFunc fitnessFunc,
                 FloatRange range)
         {
-            this.chromosomes = new List<IntChromosome>(populationSize);
+            chromosomes = new List<IntChromosome>(populationSize);
             this.generationGapPart = generationGapPart;
             this.selection = selection;
             this.crossoverOperator = crossoverOperator;
@@ -42,6 +44,7 @@ namespace GeneticAlgorithm.General
             this.fitnessFunc = fitnessFunc;
             this.paramsCount = paramsCount;
             this.range = range;
+            generatePopulationInt = new GeneratePopulationInt();
             random = new Random();
             bitCountForIntCoding = Coder.BitCountForIntCoding(range);
             GeneratePopulation();
@@ -56,7 +59,7 @@ namespace GeneticAlgorithm.General
             {
                 chromosome = new IntChromosome();
                 gens.AsParallel().ForAll(val => val = random.Next(countOfIntValsForGen + 1));
-                chromosome.gens = gens;
+                chromosome.Gens = gens;
             });
 
             /*foreach (IntChromosome chromosome in chromosomes)
@@ -77,7 +80,7 @@ namespace GeneticAlgorithm.General
 
         private void EstimatePopulation()
         {
-            chromosomes.AsParallel().ForAll(chromosome => chromosome.fitness = fitnessFunc.CalcFitnessFunc(chromosome));
+            chromosomes.AsParallel().ForAll(chromosome => chromosome.Fitness = fitnessFunc.CalcFitnessFunc(chromosome));
         }
     }
 }

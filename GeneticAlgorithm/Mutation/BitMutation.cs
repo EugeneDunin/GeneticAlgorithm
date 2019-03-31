@@ -38,17 +38,17 @@ namespace GeneticAlgorithm.Mutation
 
         private void Mutate(IntChromosome chromosome)
         {
-            int genInd = random.Next(0, chromosome.gens.Count);
+            int genInd = random.Next(0, chromosome.Gens.Count);
             int bitInd = random.Next(0, mutateMask);
-            if ((chromosome.gens[genInd] >> (bitInd)) % 2 == 0)
+            if ((chromosome.Gens[genInd] >> (bitInd)) % 2 == 0)
             {
                 //bit equal zero
-                chromosome.gens[genInd] += 1 << bitInd;
+                chromosome.Gens[genInd] += 1 << bitInd;
             }
             else
             {
                 //bit equal one
-                chromosome.gens[genInd] -= 1 << bitInd;
+                chromosome.Gens[genInd] -= 1 << bitInd;
             }
         }
 

@@ -16,12 +16,12 @@ namespace GeneticAlgorithm.Crossbreeding
         private int mask;
         private Random random;
 
-        public OnePointCrossower(double probability, FloatRange range)
+        public OnePointCrossower(double probability, IntRange range)
         {
             Prob = probability;
             chIndexes = new List<int>(2);
             random = new Random();
-            countOfBits = Coder.BitCountForIntCoding(range);
+            countOfBits = range.MaxRangeVal - range.MinRangeVal;
             mask = (int)(0xFFFFFFFF >> 32 - countOfBits);
         }
 
@@ -56,8 +56,8 @@ namespace GeneticAlgorithm.Crossbreeding
             int sharedDischargeBit = getSharedDischarge();
             IntChromosome ch1Child = (IntChromosome)ch1.Clone();
             IntChromosome ch2Child = (IntChromosome)ch2.Clone();
-            List<int> ch1ChildGens = ch1Child.gens;
-            List<int> ch2ChildGens = ch2Child.gens;
+            List<int> ch1ChildGens = ch1Child.Gens;
+            List<int> ch2ChildGens = ch2Child.Gens;
 
             for (int index = 0; index < ch1ChildGens.Count; index++)
             {

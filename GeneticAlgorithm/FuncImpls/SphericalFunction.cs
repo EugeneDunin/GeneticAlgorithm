@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GeneticAlgorithm.FuncImpls
 {
-    class SphericalFunction: IFitnessFunc
+    public class SphericalFunction: IFitnessFunc
     {
         private FitnessFuncGoal goal { get; set;}
         private double result;
@@ -21,7 +21,7 @@ namespace GeneticAlgorithm.FuncImpls
         public double CalcFitnessFunc(IntChromosome chromosome)
         {
             result = 0;
-            chromosome.gens.AsParallel().ForAll((gen) => result += Math.Pow(gen, 2));
+            chromosome.Gens.AsParallel().ForAll((gen) => result += Math.Pow(gen, 2));
             return result;
         }
 

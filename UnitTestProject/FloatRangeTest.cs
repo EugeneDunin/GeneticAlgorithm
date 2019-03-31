@@ -1,11 +1,12 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using GeneticAlgorithm.General;
+using GeneticAlgorithm.General.Range;
 
 namespace UnitTestProject
 {
     [TestClass]
-    public class RangeTest
+    public class FloatRangeTest
     {
 
         private FloatRange floatRange;

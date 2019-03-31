@@ -8,7 +8,8 @@ namespace GeneticAlgorithm.General.Range
 {
     public class IntRange
     {
-        public Int64 minRangeVal
+        private int minRangeVal;
+        public int MinRangeVal
         {
             get { return minRangeVal; }
             set
@@ -24,7 +25,8 @@ namespace GeneticAlgorithm.General.Range
             }
         }
 
-        public Int64 maxRangeVal
+        private int maxRangeVal;
+        public int MaxRangeVal
         {
             get { return maxRangeVal; }
             set
@@ -40,7 +42,7 @@ namespace GeneticAlgorithm.General.Range
             }
         }
 
-        public IntRange(Int64 minRangeVal, Int64 maxRangeVal)
+        public IntRange(int minRangeVal, int maxRangeVal)
         {
             if (ValidateRange(minRangeVal, maxRangeVal))
             {
@@ -54,7 +56,21 @@ namespace GeneticAlgorithm.General.Range
             }
         }
 
-        private bool ValidateRange(Int64 minRangeVal, Int64 maxRangeVal)
+        public IntRange(uint valsCount)
+        {
+            if (valsCount > Int32.MaxValue)
+            {
+                minRangeVal = Int32.MinValue;
+                maxRangeVal = (int)(Int32.MinValue + valsCount);
+            }
+            else
+            {
+                minRangeVal = 0;
+                maxRangeVal = (int)valsCount;
+            }
+        }
+
+        private bool ValidateRange(int minRangeVal, int maxRangeVal)
         {
             return minRangeVal < maxRangeVal;
         }

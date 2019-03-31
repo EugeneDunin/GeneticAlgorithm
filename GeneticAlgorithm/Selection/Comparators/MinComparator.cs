@@ -11,7 +11,7 @@ namespace GeneticAlgorithm.Selection.Comparators
     {
         public int Compare(IntChromosome ch1, IntChromosome ch2)
         {
-            return (int)(ch1.fitness - ch2.fitness);
+            return (int)(ch1.Fitness - ch2.Fitness);
         }
     }
 }

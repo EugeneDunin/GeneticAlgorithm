@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GeneticAlgorithm.General
+namespace GeneticAlgorithm.General.Generators
 {
     public class GeneratePopulationFloat
     {
@@ -29,7 +29,7 @@ namespace GeneticAlgorithm.General
 
         public List<FloatChromosome> Generate(FloatRange range, int populationSize, int unitGensCount)
         {
-            if (populationSize < 2 || unitGensCount < 1) { throw new ArgumentException("Population must be 2 or more"); }
+            if (populationSize < 2 || unitGensCount < 1) { throw new ArgumentException("Population must be 2 or more, gens 1 or more"); }
             Range = range;
             List<FloatChromosome> population = new List<FloatChromosome>(populationSize);
             FloatChromosome unit;
@@ -44,10 +44,10 @@ namespace GeneticAlgorithm.General
 
         public void SetGens(FloatChromosome unit, int unitGensCount)
         {
-            unit.gens = new List<double>(unitGensCount);
+            unit.Gens = new List<double>(unitGensCount);
             for (int ind = 0; ind < unitGensCount; ind++)
             {
-                unit.gens.Add(GetDoubleInRange());
+                unit.Gens.Add(GetDoubleInRange());
             }
         }
 

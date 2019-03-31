@@ -48,9 +48,12 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EstimatePopulationTest.cs" />
     <Compile Include="GeneratePopulationTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RangeTest.cs" />
+    <Compile Include="FloatRangeTest.cs" />
+    <Compile Include="CoderTest.cs" />
+    <Compile Include="IntRangeTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

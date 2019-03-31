@@ -47,8 +47,8 @@ namespace GeneticAlgorithm.General
         {
             if (ValidateRange(minRangeVal, maxRangeVal))
             {
-                this.MinRangeVal = minRangeVal;
-                this.MaxRangeVal = maxRangeVal;
+                this.minRangeVal = minRangeVal;
+                this.maxRangeVal = maxRangeVal;
                 SetAccurancy(minRangeVal, maxRangeVal);
             }
             else

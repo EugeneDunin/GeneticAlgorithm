@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GeneticAlgorithm.Transform
 {
-    class Decoder
+    public class Decoder
     {
     }
 }

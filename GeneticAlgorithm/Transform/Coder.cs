@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GeneticAlgorithm.Transform
 {
-    class Coder
+    public class Coder
     {
         public static int GetCountOfIntValsForGen(FloatRange range)
         {

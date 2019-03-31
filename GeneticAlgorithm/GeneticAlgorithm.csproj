@@ -56,9 +56,10 @@
     <Compile Include="FuncImpls\Base\IFitnessFunc.cs" />
     <Compile Include="FuncImpls\SphericalFunction.cs" />
     <Compile Include="General\Chromosome\FloatChromosome.cs" />
+    <Compile Include="General\Generators\GeneratePopulationInt.cs" />
     <Compile Include="General\GeneticAlgorithm.cs" />
     <Compile Include="General\Chromosome\IntChromosome.cs" />
-    <Compile Include="General\GeneratePopulation.cs" />
+    <Compile Include="General\Generators\GeneratePopulationFloat.cs" />
     <Compile Include="General\Probability.cs" />
     <Compile Include="General\Range\FloatRange.cs" />
     <Compile Include="General\Range\IntRange.cs" />

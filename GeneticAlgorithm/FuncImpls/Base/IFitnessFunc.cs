@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace GeneticAlgorithm.FuncImpls.Base
 {
-    enum FitnessFuncGoal
+    public enum FitnessFuncGoal
     {
         Min, Max
     }
 
-    interface IFitnessFunc
+    public interface IFitnessFunc
     {
         double CalcFitnessFunc(IntChromosome chromosome);
         FitnessFuncGoal GetGoal();

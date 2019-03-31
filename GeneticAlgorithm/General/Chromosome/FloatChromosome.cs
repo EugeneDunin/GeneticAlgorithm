@@ -8,13 +8,13 @@ namespace GeneticAlgorithm.General.Chromosome
 {
     public class FloatChromosome
     {
-        public List<double> gens { get; set; }
-        public double fitness { get; set; }
+        public List<double> Gens { get; set; }
+        public double Fitness { get; set; }
 
         public Object Clone()
         {
             FloatChromosome chromosome = new FloatChromosome();
-            chromosome.gens = new List<double>(gens);
+            chromosome.Gens = new List<double>(Gens);
             return chromosome;
         }
     }
