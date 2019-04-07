@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GeneticAlgorithm.Properties
+namespace GeneticAlgorithmProj.Properties
 {
 
 

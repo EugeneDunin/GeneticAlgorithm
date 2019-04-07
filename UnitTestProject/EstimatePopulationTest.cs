@@ -1,37 +1,38 @@
-﻿using GeneticAlgorithm.General;
-using GeneticAlgorithm.General.Chromosome;
+﻿using GeneticAlgorithmProj.General;
+using GeneticAlgorithmProj.General.Chromosome;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GeneticAlgorithmProj.FuncImpls;
+using GeneticAlgorithmProj.General.Generators;
+using GeneticAlgorithmProj.General.Range;
 using GeneticAlgorithm.FuncImpls.Base;
-using GeneticAlgorithm.FuncImpls;
-using GeneticAlgorithm.General.Generators;
 
 namespace UnitTestProject
 {
     class EstimatePopulationTest
     {
-        private GeneratePopulationFloat generatePopulation;
-        private FloatRange floatRange;
-        private IFitnessFunc fitnessFunc;
-        List<FloatChromosome> chromosomes;
+        private GeneratePopulationReal generatePopulation;
+        private RealRange floatRange;
+        private FitnessFuncReal fitnessFunc;
+        private List<RealChromosome> chromosomes;
 
         [TestInitialize]
         public void SetupContext()
         {
-            floatRange = new FloatRange(-5.11, 5.12);
-            generatePopulation = new GeneratePopulationFloat();
+            floatRange = new RealRange(-5.11, 5.12);
+            generatePopulation = new GeneratePopulationReal(floatRange);
             int populationSize = 20, gensCount = 1;
-            chromosomes = generatePopulation.Generate(floatRange, populationSize, gensCount);
+            chromosomes = generatePopulation.Generate(populationSize, gensCount);
             fitnessFunc = new SphericalFunction(FitnessFuncGoal.Min);
         }
 
         private void EstimatePopulation()
         {
-            //chromosomes.AsParallel().ForAll(chromosome => chromosome.fitness = fitnessFunc.CalcFitnessFunc(chromosome));
+            chromosomes.AsParallel().ForAll(chromosome => chromosome.Fitness = fitnessFunc.CalcFitnessFunc(chromosome));
         }
     }
 }

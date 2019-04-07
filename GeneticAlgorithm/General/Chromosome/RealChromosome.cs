@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace GeneticAlgorithmProj.General.Chromosome
 {
-    public class IntChromosome: ICloneable
+    public class RealChromosome
     {
-        public List<long> Gens { get; set; } = new List<long>();
-        public long Fitness { get; set; }
-        
+        public List<double> Gens { get; set; } = new List<double>();
+        public double Fitness { get; set; }
+
         public Object Clone()
         {
-            IntChromosome chromosome = new IntChromosome
+            RealChromosome chromosome = new RealChromosome
             {
-                Gens = new List<long>(Gens)
+                Gens = new List<double>(Gens)
             };
             return chromosome;
         }

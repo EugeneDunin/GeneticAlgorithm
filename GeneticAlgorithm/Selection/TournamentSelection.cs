@@ -1,56 +1,99 @@
 ﻿using GeneticAlgorithm.FuncImpls.Base;
-using GeneticAlgorithm.General;
-using GeneticAlgorithm.Selection.Comparators;
+using GeneticAlgorithmProj.General;
+using GeneticAlgorithmProj.General.Chromosome;
+using GeneticAlgorithmProj.Selection.Comparators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GeneticAlgorithm.Selection
+namespace GeneticAlgorithmProj.Selection
 {
-    class TournamentSelection: ISelection
+    public class TournamentSelection: ISelection
     {
-        private int tournamentSize;
         private List<int> chromosomeIndexes;
         private Random random = new Random();
         private IComparer<IntChromosome> comparator;
 
-        public TournamentSelection(int populationSize, int tournamentSize, FitnessFuncGoal goal)
+        private FitnessFuncGoal goal;
+        public FitnessFuncGoal SetGoalAndComparator {
+            get { return goal; }
+            set
+            {
+                goal = value;
+                comparator = InitComparator(goal);
+            }
+        }
+
+        private int tournamentSize;
+        public int TournamentSize
         {
-            if(tournamentSize >= 2 && tournamentSize<populationSize){
+            get { return tournamentSize; }
+            set
+            {
+                if (value >= 2)
+                {
+                    tournamentSize = value;
+                }
+                else
+                {
+                    throw new ArgumentException
+                        ("Tournament size must be 2 or more");
+                };
+            }
+        }
+
+        private void PreSelectionInit(int populationSize, FitnessFuncGoal goal)
+        {
+            if(TournamentSize < populationSize){
                 chromosomeIndexes = new List<int>(tournamentSize);
-                comparator = initComparator(goal);
+                SetGoalAndComparator = goal;
             }
             else
             {
                 throw new ArgumentException
-                    ("Tournament size must be between 2 and population size minus 1.");
-            }
-        }
-
-        public TournamentSelection(int populationSize)
-        {
-            random = new Random();
-            tournamentSize = random.Next(populationSize);
-            if (tournamentSize < 2)
-            {
-                tournamentSize = 2;
+                    ("Tournament size must be less then population size value.");
             }
         }
 
         public List<IntChromosome> Selection(List<IntChromosome> chromosomes, FitnessFuncGoal goal)
         {
+            PreSelectionInit(chromosomes.Count, goal);
             List<IntChromosome> bestChromosomes = new List<IntChromosome>();
-            while (bestChromosomes.Count < chromosomes.Count)
+
+            for(int ind = 0; ind < tournamentSize; ind++)
             {
-                chromosomeIndexes.AsParallel().ForAll(val => val = random.Next(chromosomes.Count));
-                bestChromosomes.Add(FindBest(chromosomes, goal));
+                chromosomeIndexes.Add(random.Next(chromosomes.Count));
+            }
+
+            while (true)
+            {
+                bestChromosomes.Add(FindBest(chromosomes));
+                if (bestChromosomes.Count < chromosomes.Count)
+                {
+                    chromosomeIndexes.AsParallel().ForAll((val) => val = random.Next(chromosomes.Count));
+                }
+                else
+                {
+                    break;
+                }
             }
             return bestChromosomes;
         }
 
-        private IntChromosome FindBest(List<IntChromosome> chromosomes, FitnessFuncGoal goal)
+        /*public List<IntChromosome> Selection(List<IntChromosome> chromosomes)
+        {
+            List<IntChromosome> bestChromosomes = new List<IntChromosome>();
+            while (bestChromosomes.Count < chromosomes.Count)
+            {
+                chromosomeIndexes.AsParallel().ForAll(val => val = random.Next(chromosomes.Count));
+                bestChromosomes.Add(FindBest(chromosomes));
+            }
+            return bestChromosomes;
+        }*/
+
+        private IntChromosome FindBest(List<IntChromosome> chromosomes)
         {
             IntChromosome bestChromosome = null;
             foreach (int index in chromosomeIndexes)
@@ -63,7 +106,7 @@ namespace GeneticAlgorithm.Selection
             return bestChromosome;
         }
 
-        public IComparer<IntChromosome> initComparator(FitnessFuncGoal goal)
+        private IComparer<IntChromosome> InitComparator(FitnessFuncGoal goal)
         {
             switch (goal)
             {

@@ -1,28 +1,26 @@
-﻿using GeneticAlgorithm.General;
-using GeneticAlgorithm.General.Range;
-using GeneticAlgorithm.Transform;
+﻿using GeneticAlgorithmProj.General;
+using GeneticAlgorithmProj.General.Chromosome;
+using GeneticAlgorithmProj.General.Range;
+using GeneticAlgorithmProj.Transform;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GeneticAlgorithm.Crossbreeding
+namespace GeneticAlgorithmProj.Crossbreeding
 {
     class OnePointCrossower: CrossoverOperator
     {
-        private List<int> chIndexes;
         private int countOfBits;
-        private int mask;
+        private long mask;
         private Random random;
 
-        public OnePointCrossower(double probability, IntRange range)
+        public OnePointCrossower(double probability, IntRange range): base(probability)
         {
-            Prob = probability;
-            chIndexes = new List<int>(2);
             random = new Random();
-            countOfBits = range.MaxRangeVal - range.MinRangeVal;
-            mask = (int)(0xFFFFFFFF >> 32 - countOfBits);
+            countOfBits = Coder.BitCountForIntCoding((UInt64)(range.MaxRangeVal - range.MinRangeVal));
+            mask = (long)(0xFFFFFFFFFFFFFFFF >> 64 - countOfBits);
         }
 
         public override List<IntChromosome> Crossover(List<IntChromosome> chromosomes)
@@ -31,14 +29,11 @@ namespace GeneticAlgorithm.Crossbreeding
             IntChromosome ch1, ch2;
             while (progeny.Count < chromosomes.Count)
             {
-                chIndexes.AsParallel().ForAll(val => val = random.Next(chromosomes.Count));
-                ch1 = chromosomes.ElementAt(chIndexes.ElementAt(chIndexes.ElementAt(0)));
-                ch2 = chromosomes.ElementAt(chIndexes.ElementAt(chIndexes.ElementAt(1)));
+                ch1 = chromosomes.ElementAt(random.Next(chromosomes.Count));
+                ch2 = chromosomes.ElementAt(random.Next(chromosomes.Count));
                 if (IsWillCross())
                 {
-                    crossbreeding(ch1, ch2);
-                    progeny.Add(ch1);
-                    progeny.Add(ch2);
+                    progeny.AddRange(Crossbreeding(ch1, ch2));
                 }
             }
             return progeny;
@@ -47,29 +42,32 @@ namespace GeneticAlgorithm.Crossbreeding
         private bool IsWillCross()
         {
             double val = random.NextDouble();
-            return (GAUS_MAX - Prob / 2) < val &&
-                    val < (GAUS_MAX + Prob / 2);
+            return (GAUS_FUNC_MAX - Prob / 2) < val &&
+                    val < (GAUS_FUNC_MAX + Prob / 2);
         }
 
-        private void crossbreeding(IntChromosome ch1, IntChromosome ch2)
+        private List<IntChromosome> Crossbreeding(IntChromosome ch1, IntChromosome ch2)
         {
-            int sharedDischargeBit = getSharedDischarge();
+            int sharedDischargeBit = GetSharedDischarge();
             IntChromosome ch1Child = (IntChromosome)ch1.Clone();
             IntChromosome ch2Child = (IntChromosome)ch2.Clone();
-            List<int> ch1ChildGens = ch1Child.Gens;
-            List<int> ch2ChildGens = ch2Child.Gens;
+            List<long> ch1ChildGens = ch1Child.Gens;
+            List<long> ch2ChildGens = ch2Child.Gens;
 
             for (int index = 0; index < ch1ChildGens.Count; index++)
             {
                 ch1ChildGens[index] = CrossbreedingGen(ch1ChildGens.ElementAt(index), ch2ChildGens.ElementAt(index), sharedDischargeBit);
                 ch2ChildGens[index] = CrossbreedingGen(ch2ChildGens.ElementAt(index), ch1ChildGens.ElementAt(index), sharedDischargeBit);
             }
-            ch1 = ch1Child;
-            ch2 = ch2Child;
+
+            return new List<IntChromosome>()
+            {
+                ch1Child, ch2Child
+            };
         }
 
-        //Between 1 and countOfBits
-        private int getSharedDischarge()
+        //Between 1 and countOfBits - 1
+        private int GetSharedDischarge()
         {
             int sharedDischargeBit = random.Next(countOfBits);
             if (sharedDischargeBit == 0)
@@ -79,10 +77,10 @@ namespace GeneticAlgorithm.Crossbreeding
             return sharedDischargeBit;
         }
 
-        private int CrossbreedingGen(int gen1, int gen2, int sharedDischargeBit)
+        private long CrossbreedingGen(long gen1, long gen2, int sharedDischargeBit)
         {
             return (gen1 & (mask >> sharedDischargeBit)) |
-                   (gen2 & (mask << sharedDischargeBit & mask));
+                   (gen2 & ((mask << sharedDischargeBit) & mask));
         }
     }
 }

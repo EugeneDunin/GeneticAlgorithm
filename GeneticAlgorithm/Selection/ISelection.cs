@@ -1,14 +1,15 @@
 ﻿using GeneticAlgorithm.FuncImpls.Base;
-using GeneticAlgorithm.General;
+using GeneticAlgorithmProj.General;
+using GeneticAlgorithmProj.General.Chromosome;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GeneticAlgorithm.Selection
+namespace GeneticAlgorithmProj.Selection
 {
-    interface ISelection
+    public interface ISelection
     {
         List<IntChromosome> Selection(List<IntChromosome> chromosomes, FitnessFuncGoal goal);
     }

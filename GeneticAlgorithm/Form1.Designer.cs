@@ -1,4 +1,4 @@
-﻿namespace GeneticAlgorithm
+﻿namespace GeneticAlgorithmProj
 {
     partial class Form1
     {

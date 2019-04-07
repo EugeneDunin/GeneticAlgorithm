@@ -51,17 +51,18 @@
     <Compile Include="EstimatePopulationTest.cs" />
     <Compile Include="GeneratePopulationTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="FloatRangeTest.cs" />
+    <Compile Include="RealRangeTest.cs" />
     <Compile Include="CoderTest.cs" />
     <Compile Include="IntRangeTest.cs" />
+    <Compile Include="Selection\SelectionTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GeneticAlgorithm\GeneticAlgorithm.csproj">
+    <ProjectReference Include="..\GeneticAlgorithm\GeneticAlgorithmProj.csproj">
       <Project>{19a00ed2-c388-4091-ac18-476e7763abce}</Project>
-      <Name>GeneticAlgorithm</Name>
+      <Name>GeneticAlgorithmProj</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

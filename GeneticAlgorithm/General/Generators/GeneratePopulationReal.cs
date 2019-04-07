@@ -1,18 +1,19 @@
-﻿using GeneticAlgorithm.General.Chromosome;
-using GeneticAlgorithm.Transform;
+﻿using GeneticAlgorithmProj.General.Chromosome;
+using GeneticAlgorithmProj.General.Range;
+using GeneticAlgorithmProj.Transform;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GeneticAlgorithm.General.Generators
+namespace GeneticAlgorithmProj.General.Generators
 {
-    public class GeneratePopulationFloat
+    public class GeneratePopulationReal
     {
         private Random random = new Random();
-        private FloatRange range;
-        public FloatRange Range {
+        private RealRange range;
+        public RealRange Range {
             get { return range; }
             set
             {
@@ -27,22 +28,26 @@ namespace GeneticAlgorithm.General.Generators
             }
         }
 
-        public List<FloatChromosome> Generate(FloatRange range, int populationSize, int unitGensCount)
+        public GeneratePopulationReal(RealRange range)
+        {
+            Range = range;
+        }
+
+        public List<RealChromosome> Generate(int populationSize, int unitGensCount)
         {
             if (populationSize < 2 || unitGensCount < 1) { throw new ArgumentException("Population must be 2 or more, gens 1 or more"); }
-            Range = range;
-            List<FloatChromosome> population = new List<FloatChromosome>(populationSize);
-            FloatChromosome unit;
+            List<RealChromosome> population = new List<RealChromosome>(populationSize);
+            RealChromosome unit;
             for (int ind = 0; ind < populationSize; ind++)
             {
-                unit = new FloatChromosome();
+                unit = new RealChromosome();
                 SetGens(unit, unitGensCount);
                 population.Add(unit);
             }
             return population;
         }
 
-        public void SetGens(FloatChromosome unit, int unitGensCount)
+        public void SetGens(RealChromosome unit, int unitGensCount)
         {
             unit.Gens = new List<double>(unitGensCount);
             for (int ind = 0; ind < unitGensCount; ind++)
@@ -53,15 +58,15 @@ namespace GeneticAlgorithm.General.Generators
 
         private double GetDoubleInRange()
         {
-            return RoundToAccuracy(GetDouble(Range.IsContainZero()) * (Range.MaxRangeVal - Range.MinRangeVal) + Range.MinRangeVal);
+            return RoundToAccuracy(random.NextDouble() * (Range.MaxRangeVal - Range.MinRangeVal) + Range.MinRangeVal);
         }
 
         private double RoundToAccuracy(double val)
         {
-            return (val / Range.Accuracy) * Range.Accuracy;
+            return Math.Truncate(val / Range.Accuracy) * Range.Accuracy;
         }
 
-        private double GetDouble(bool zero)
+        /*private double GetDouble(bool zero)
         {
             if (zero)
             {
@@ -76,6 +81,6 @@ namespace GeneticAlgorithm.General.Generators
             {
                 return random.NextDouble();
             }
-        }
+        }*/
     }
 }

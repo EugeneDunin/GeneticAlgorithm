@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GeneticAlgorithm.General.Range
+namespace GeneticAlgorithmProj.General.Range
 {
     public class IntRange
     {
-        private int minRangeVal;
-        public int MinRangeVal
+        private long minRangeVal;
+        public long MinRangeVal
         {
             get { return minRangeVal; }
             set
@@ -25,8 +25,8 @@ namespace GeneticAlgorithm.General.Range
             }
         }
 
-        private int maxRangeVal;
-        public int MaxRangeVal
+        private long maxRangeVal;
+        public long MaxRangeVal
         {
             get { return maxRangeVal; }
             set
@@ -56,21 +56,21 @@ namespace GeneticAlgorithm.General.Range
             }
         }
 
-        public IntRange(uint valsCount)
+        public IntRange(ulong valsCount)
         {
-            if (valsCount > Int32.MaxValue)
+            if (valsCount > Int64.MaxValue)
             {
-                minRangeVal = Int32.MinValue;
-                maxRangeVal = (int)(Int32.MinValue + valsCount);
+                minRangeVal = Int64.MinValue;
+                maxRangeVal = (long)(valsCount - Int64.MaxValue - 1);
             }
             else
             {
                 minRangeVal = 0;
-                maxRangeVal = (int)valsCount;
+                maxRangeVal = (long)valsCount;
             }
         }
 
-        private bool ValidateRange(int minRangeVal, int maxRangeVal)
+        private bool ValidateRange(long minRangeVal, long maxRangeVal)
         {
             return minRangeVal < maxRangeVal;
         }

@@ -1,12 +1,12 @@
-﻿using GeneticAlgorithm.General.Chromosome;
-using GeneticAlgorithm.General.Range;
+﻿using GeneticAlgorithmProj.General.Chromosome;
+using GeneticAlgorithmProj.General.Range;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GeneticAlgorithm.General.Generators
+namespace GeneticAlgorithmProj.General.Generators
 {
     public class GeneratePopulationInt
     {
@@ -28,10 +28,14 @@ namespace GeneticAlgorithm.General.Generators
             }
         }
 
-        public List<IntChromosome> Generate(IntRange range, int populationSize, int unitGensCount)
+        public GeneratePopulationInt(IntRange range)
+        {
+            Range = range;
+        }
+
+        public List<IntChromosome> Generate(int populationSize, int unitGensCount)
         {
             if (populationSize < 2 || unitGensCount < 1) { throw new ArgumentException("Population must be 2 or more, gens 1 or more"); }
-            Range = range;
             List<IntChromosome> population = new List<IntChromosome>(populationSize);
             IntChromosome unit;
             for (int ind = 0; ind < populationSize; ind++)
@@ -45,7 +49,7 @@ namespace GeneticAlgorithm.General.Generators
 
         public void SetGens(IntChromosome unit, int unitGensCount)
         {
-            unit.Gens = new List<int>(unitGensCount);
+            unit.Gens = new List<long>(unitGensCount);
             for (int ind = 0; ind < unitGensCount; ind++)
             {
                 unit.Gens.Add(GetIntInRange());

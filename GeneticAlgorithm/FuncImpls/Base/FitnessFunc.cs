@@ -1,4 +1,4 @@
-﻿using GeneticAlgorithm.General;
+﻿using GeneticAlgorithmProj.FuncImpls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +12,12 @@ namespace GeneticAlgorithm.FuncImpls.Base
         Min, Max
     }
 
-    public interface IFitnessFunc
+    public abstract class FitnessFunc
     {
-        double CalcFitnessFunc(IntChromosome chromosome);
-        FitnessFuncGoal GetGoal();
+        public FitnessFuncGoal Goal { get; set; }
+        protected FitnessFunc(FitnessFuncGoal goal)
+        {
+            this.Goal = goal;
+        }
     }
 }

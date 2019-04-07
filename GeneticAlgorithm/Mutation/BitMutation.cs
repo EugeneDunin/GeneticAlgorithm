@@ -1,4 +1,5 @@
-﻿using GeneticAlgorithm.General;
+﻿using GeneticAlgorithmProj.General;
+using GeneticAlgorithmProj.General.Chromosome;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,16 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GeneticAlgorithm.Mutation
+namespace GeneticAlgorithmProj.Mutation
 {
-    class BitMutation: MutationOperator
+    class BitMutation : MutationOperator
     {
         private Random random;
         private int mutateMask;
 
-        public BitMutation(double probability)
+        public BitMutation(double mutationProbability): base(mutationProbability)
         {
-            this.Prob = probability;
             random = new Random();
         }
 
@@ -55,8 +55,8 @@ namespace GeneticAlgorithm.Mutation
         private bool IsWillMutate()
         {
             double val = random.Next();
-            return (GAUS_MAX - Prob / 2) < val &&
-                    val < (GAUS_MAX + Prob / 2);
+            return (GAUS_FUNC_MAX - Prob / 2) < val &&
+                    val < (GAUS_FUNC_MAX + Prob / 2);
         }
     }
 }

@@ -1,22 +1,22 @@
-﻿using GeneticAlgorithm.General;
+﻿using GeneticAlgorithmProj.General.Range;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GeneticAlgorithm.Transform
+namespace GeneticAlgorithmProj.Transform
 {
     public class Coder
     {
-        public static int GetCountOfIntValsForGen(FloatRange range)
+        public static ulong GetCountOfIntValsForGen(RealRange range)
         {
             return CalcNumberOfValues(range);
         }
 
-        public static int BitCountForIntCoding(int countOfValues)
+        public static int BitCountForIntCoding(ulong countOfValues)
         {
-            int result = 2;
+            ulong result = 2;
             int iter = 0;
             while (result < countOfValues)
             {
@@ -26,14 +26,14 @@ namespace GeneticAlgorithm.Transform
             return iter;
         }
 
-        public static int BitCountForIntCoding(FloatRange range)
+        public static int BitCountForIntCoding(RealRange range)
         {
             return BitCountForIntCoding(CalcNumberOfValues(range));
         }
 
-        private static int CalcNumberOfValues(FloatRange range)
+        private static ulong CalcNumberOfValues(RealRange range)
         {
-            return (int)Math.Ceiling(
+            return (ulong)Math.Ceiling(
                 (range.MaxRangeVal - range.MinRangeVal) / range.Accuracy + IsContainZero(range.MinRangeVal, range.MaxRangeVal));
         }
 

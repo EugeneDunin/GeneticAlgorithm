@@ -53,16 +53,20 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="FuncImpls\Base\IFitnessFunc.cs" />
+    <Compile Include="FuncImpls\Base\FitnessFunc.cs" />
+    <Compile Include="FuncImpls\Base\FitnessFuncInt.cs" />
+    <Compile Include="FuncImpls\Base\FitnessFuncReal.cs" />
     <Compile Include="FuncImpls\SphericalFunction.cs" />
-    <Compile Include="General\Chromosome\FloatChromosome.cs" />
+    <Compile Include="General\Chromosome\RealChromosome.cs" />
     <Compile Include="General\Generators\GeneratePopulationInt.cs" />
-    <Compile Include="General\GeneticAlgorithm.cs" />
+    <Compile Include="General\Genetic\GeneticAlgorithmReal.cs" />
     <Compile Include="General\Chromosome\IntChromosome.cs" />
-    <Compile Include="General\Generators\GeneratePopulationFloat.cs" />
+    <Compile Include="General\Generators\GeneratePopulationReal.cs" />
+    <Compile Include="General\Genetic\GeneticAlhorithmInt.cs" />
     <Compile Include="General\Probability.cs" />
-    <Compile Include="General\Range\FloatRange.cs" />
+    <Compile Include="General\Range\RealRange.cs" />
     <Compile Include="General\Range\IntRange.cs" />
+    <Compile Include="General\Range\Range.cs" />
     <Compile Include="Mutation\BitMutation.cs" />
     <Compile Include="Mutation\MutationOperator.cs" />
     <Compile Include="Program.cs" />
@@ -72,7 +76,7 @@
     <Compile Include="Selection\ISelection.cs" />
     <Compile Include="Selection\TournamentSelection.cs" />
     <Compile Include="Transform\Coder.cs" />
-    <Compile Include="Transform\Decoder.cs" />
+    <Compile Include="Transform\ChromosomeConverter.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

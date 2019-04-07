@@ -1,11 +1,11 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using GeneticAlgorithm.General;
-using GeneticAlgorithm.General.Generators;
+using GeneticAlgorithmProj.General;
+using GeneticAlgorithmProj.General.Generators;
 using System.Collections.Generic;
-using GeneticAlgorithm.General.Range;
-using GeneticAlgorithm.General.Chromosome;
-using GeneticAlgorithm.Transform;
+using GeneticAlgorithmProj.General.Range;
+using GeneticAlgorithmProj.General.Chromosome;
+using GeneticAlgorithmProj.Transform;
 
 namespace UnitTestProject
 {
@@ -13,34 +13,35 @@ namespace UnitTestProject
     public class GeneratePopulationTest
     {
 
-        private GeneratePopulationFloat generatePopulationFloat;
-        private FloatRange floatRange;
+        private GeneratePopulationReal generatePopulationFloat;
+        private RealRange floatRange;
 
         private GeneratePopulationInt generatePopulationInt;
         private IntRange intRange;
 
+        int populationSize = 20, gensCount = 1;
+
         [TestInitialize]
         public void SetupContext()
         {
-            floatRange = new FloatRange(-5.11, 5.12);
-            generatePopulationFloat = new GeneratePopulationFloat();
-            intRange = new IntRange((UInt32)Coder.GetCountOfIntValsForGen(floatRange));
-            generatePopulationInt = new GeneratePopulationInt();
+            floatRange = new RealRange(-5.11, 5.12);
+            generatePopulationFloat = new GeneratePopulationReal(floatRange);
+            intRange = new IntRange(Coder.GetCountOfIntValsForGen(floatRange));
+            generatePopulationInt = new GeneratePopulationInt(intRange);
         }
 
         [TestMethod]
         public void GeneratePopulationFloatCheckerTest()
         {
-            int populationSize = 20, gensCount = 1;
-            List<FloatChromosome> list = generatePopulationFloat.Generate(floatRange, populationSize, gensCount);
+            List<RealChromosome> list = generatePopulationFloat.Generate(populationSize, gensCount);
             Assert.AreEqual(list.Count, populationSize);
             list.ForEach((ch) => {
                 Assert.IsTrue(ch.Gens.Count == gensCount);
-                GensTest(ch.Gens);
+                GensCheckTest(ch.Gens);
             });
         }
 
-        private void GensTest(List<double> gens)
+        private void GensCheckTest(List<double> gens)
         {
             gens.ForEach((gen) => Assert.IsTrue(floatRange.MinRangeVal < gen && gen < floatRange.MaxRangeVal));
         }
@@ -48,16 +49,15 @@ namespace UnitTestProject
         [TestMethod]
         public void GeneratePopulationIntCheckerTest()
         {
-            int populationSize = 20, gensCount = 1;
-            List<IntChromosome> list = generatePopulationInt.Generate(intRange, populationSize, gensCount);
+            List<IntChromosome> list = generatePopulationInt.Generate(populationSize, gensCount);
             Assert.AreEqual(list.Count, populationSize);
             list.ForEach((ch) => {
                 Assert.IsTrue(ch.Gens.Count == gensCount);
-                GensTest(ch.Gens);
+                GensCheckTest(ch.Gens);
             });
         }
 
-        private void GensTest(List<int> gens)
+        private void GensCheckTest(List<long> gens)
         {
             gens.ForEach((gen) => Assert.IsTrue(intRange.MinRangeVal < gen && gen < intRange.MaxRangeVal));
         }
